@@ -79,13 +79,13 @@ export default function Footer() {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-body text-muted">
           <p>© {new Date().getFullYear()} Kyue. All rights reserved.</p>
           <div className="flex gap-5">
-            {['Privacy Policy', 'Terms of Service'].map((item) => (
+            {[['Privacy Policy', '/privacy'], ['Terms of Service', '/terms']].map(([label, href]) => (
               <a
-                key={item}
-                href="#"
+                key={label}
+                href={href}
                 className="hover:text-cream-muted transition-colors duration-200"
               >
-                {item}
+                {label}
               </a>
             ))}
           </div>

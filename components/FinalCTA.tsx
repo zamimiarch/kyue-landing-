@@ -1,15 +1,9 @@
 'use client'
 
-import { useState } from 'react'
+import { useForm, ValidationError } from '@formspree/react'
 
 export default function FinalCTA() {
-  const [email, setEmail] = useState('')
-  const [submitted, setSubmitted] = useState(false)
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (email) setSubmitted(true)
-  }
+  const [state, handleSubmit] = useForm('mbdqopdw')
 
   return (
     <section id="beta" className="py-24 relative overflow-hidden">
@@ -46,24 +40,35 @@ export default function FinalCTA() {
 
         {/* Form */}
         <div className="reveal delay-1">
-          {!submitted ? (
-            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-6">
-              <label htmlFor="beta-email" className="sr-only">Email address</label>
+          {!state.succeeded ? (
+            <form onSubmit={handleSubmit} className="flex flex-col gap-3 max-w-md mx-auto mb-6">
+              <label htmlFor="beta-name" className="sr-only">Name</label>
               <input
-                id="beta-email"
-                type="email"
+                id="beta-name"
+                type="text"
+                name="name"
                 required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="your@email.com"
-                className="flex-1 px-5 py-4 rounded-full bg-surface border border-white/10 text-cream placeholder:text-muted font-body text-sm focus:outline-none focus:border-coral/50 transition-colors duration-200"
+                placeholder="your name"
+                className="w-full px-5 py-4 rounded-full bg-surface border border-white/10 text-cream placeholder:text-muted font-body text-sm focus:outline-none focus:border-coral/50 transition-colors duration-200"
               />
-              <button
-                type="submit"
-                className="px-8 py-4 rounded-full bg-coral text-bg font-body font-semibold text-sm hover:bg-coral-dark hover:scale-105 transition-all duration-300 shadow-xl shadow-coral/30 whitespace-nowrap"
-              >
-                Request Invite
-              </button>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <label htmlFor="beta-email" className="sr-only">Email address</label>
+                <input
+                  id="beta-email"
+                  type="email"
+                  name="email"
+                  required
+                  placeholder="your@email.com"
+                  className="flex-1 px-5 py-4 rounded-full bg-surface border border-white/10 text-cream placeholder:text-muted font-body text-sm focus:outline-none focus:border-coral/50 transition-colors duration-200"
+                />
+                <button
+                  type="submit"
+                  disabled={state.submitting}
+                  className="px-8 py-4 rounded-full bg-coral text-bg font-body font-semibold text-sm hover:bg-coral-dark hover:scale-105 transition-all duration-300 shadow-xl shadow-coral/30 whitespace-nowrap disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
+                >
+                  {state.submitting ? 'Sending...' : 'Request Invite'}
+                </button>
+              </div>
             </form>
           ) : (
             <div className="max-w-md mx-auto mb-6 px-6 py-5 rounded-full bg-surface border border-coral/30 text-center">
@@ -73,6 +78,8 @@ export default function FinalCTA() {
               </p>
             </div>
           )}
+
+          <ValidationError errors={state.errors} className="font-body text-xs text-[#e07070] mt-2 mb-2 text-center" />
 
           <p className="font-body text-xs text-muted">
             No credit card. No spam. TestFlight invite within 24 hours.
