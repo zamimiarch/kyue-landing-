@@ -32,7 +32,7 @@ export default function Header() {
             alt="Kyue"
             width={400}
             height={144}
-            className="h-36 w-auto object-contain"
+            className="h-36 w-auto object-contain mt-6"
             priority
           />
         </a>
