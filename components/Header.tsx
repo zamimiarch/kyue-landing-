@@ -30,9 +30,9 @@ export default function Header() {
           <Image
             src="/logo/echoed_curves_lockup_v2.png"
             alt="Kyue"
-            width={120}
-            height={36}
-            className="h-9 w-auto object-contain"
+            width={400}
+            height={144}
+            className="h-36 w-auto object-contain"
             priority
           />
         </a>
